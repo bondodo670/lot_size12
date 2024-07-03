@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lot Size Calculator</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h1>Lot Size Calculator</h1>
+    <form id="calculator-form">
+        <label for="current_lot_size">Current Lot Size:</label>
+        <input type="number" step="any" id="current_lot_size" name="current_lot_size" required><br><br>
+        
+        <label for="current_loss">Current Loss:</label>
+        <input type="number" step="any" id="current_loss" name="current_loss" required><br><br>
+        
+        <label for="risk_amount">Risk Amount:</label>
+        <input type="number" step="any" id="risk_amount" name="risk_amount" required><br><br>
+        
+        <input type="submit" value="Calculate">
+    </form>
+    <div id="result"></div>
+
+    <script>
+        $(document).ready(function() {
+            $('#calculator-form').submit(function(e) {
+                e.preventDefault();
+                $.ajax({
+                    url: '/',
+                    type: 'post',
+                    data: $('#calculator-form').serialize(),
+                    success: function(response) {
+                        $('#result').text('New Lot Size: ' + response.new_lot_size);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
